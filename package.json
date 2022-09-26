@@ -6,14 +6,24 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:create": "sequelize db:create",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed": "sequelize db:seed:all",
+    "db:drop": "sequelize db:drop",
+    "db:remove": "rm -f ./db/database.sqlite3",
+    "db:rebuild": "npm run db:drop && npm run db:create && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bootstrap": "^5.2.1",
+    "mysql2": "^2.3.3",
     "next": "12.3.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sequelize": "^6.23.1",
+    "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
     "eslint": "8.23.0",

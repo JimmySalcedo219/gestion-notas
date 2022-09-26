@@ -1,6 +1,6 @@
 import React from "react"
 import { useRouter } from "next/router"
-
+import AuthService from '../servicios/auth'
 
 export default function Login(props) {
     const router=useRouter()
@@ -13,7 +13,18 @@ export default function Login(props) {
           const data = Object.fromEntries(formData)    
           const usuario = data["usuario"]
           const pass = data["contraseña"] 
-          if (usuario === 'admin' && pass === 'admin') {
+
+          const respuesta = await AuthService.login(usuario, pass)
+          if (respuesta?.error) {
+            alert(respuesta.error)
+          }
+
+          alert(JSON.stringify(respuesta))
+
+
+
+
+          /*if (usuario === 'admin' && pass === 'admin') {
             alert('Bienvenido Admin!')
             router.replace('/admin')
           } else if (usuario === 'docente' && pass === 'docente') {
@@ -24,7 +35,7 @@ export default function Login(props) {
             router.replace('/estudiante')
           } else {
             alert('Usuario o contraseña invalida')
-          }
+          }*/
     
           
         } catch (error) {
