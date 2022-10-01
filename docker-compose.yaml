@@ -1,27 +1,46 @@
 version: '3.7'
+
 services:
-  mysql:
-    container_name: mysql
+  db:
+    container_name: db_mysql
+    expose:
+      - '3306'
     ports:
       - '3306:3306'
-    image: mysql:latest
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_DATABASE: gestion-notas
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ALLOW_EMPTY_PASSWORD: ok
+      MYSQL_USER: root
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - mysql:/var/lib/mysql
+    networks:
+      - dev
   frontend:
-    container_name: frontend
+    container_name: front_next
     ports:
       - '3000:3000'
     build:
       context: .
       dockerfile: Dockerfile
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm run db:rebuild; npm start'
+    links:
+      - db
+    depends_on:
+      - db
     volumes:
       - ./:/app
       - /app/node_modules
       - /app/.next
+    networks:
+      - dev
+
+networks:
+  dev:
+    driver: bridge
 
 volumes: #define our mysql volume used above
   mysql:

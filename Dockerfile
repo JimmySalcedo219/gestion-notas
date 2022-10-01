@@ -11,11 +11,11 @@ COPY . /usr/src/app
 RUN npm install
 
 # Migrations
-RUN npm db:rebuild
+# RUN npm run db:rebuild
 
 # Building app
 RUN npm run build
 EXPOSE 3000
 
 # Running the app
-CMD "npm" "run" "start"
+# CMD "npm" "run" "start"
