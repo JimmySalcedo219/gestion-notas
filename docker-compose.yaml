@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  mysql:
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: gestion-notas
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    volumes:
+      - mysql:/var/lib/mysql
+  frontend:
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes: #define our mysql volume used above
+  mysql:

@@ -19,15 +19,15 @@ module.exports = {
     ]
 
     const estudiantes = await queryInterface.sequelize.query(
-      `SELECT id from usuarios WHERE rol='estudiante';`
+      `SELECT id from Usuarios WHERE rol='estudiante';`
     )
-    
+
     estudiantes[0].forEach(({ id }) => {
       data.push({
         usuarioId: id,
         asignaturaId: 1,
       })
-      
+
       data.push({
         usuarioId: id,
         asignaturaId: 2,

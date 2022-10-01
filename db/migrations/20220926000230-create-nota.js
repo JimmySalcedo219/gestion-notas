@@ -1,58 +1,66 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Notas', {
+    await queryInterface.createTable('Nota', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       nota1: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       nota2: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       nota3: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       nota4: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       nota5: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       notaFinal: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        defaultValue: 0,
       },
       asignaturaId: {
         references:{
           model:"Asignaturas",
           key:"id",
-          as: "asignaturaIdId",
+          as: "asignaturaId",
         },
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       usuarioId: {
         references:{
           model:"Usuarios",
           key:"id",
-          as: "usuarioId"
+          as: "usuarioId",
         },
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Notas');
+    await queryInterface.dropTable('Nota');
   }
 };

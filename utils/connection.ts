@@ -1,9 +1,13 @@
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 
-/*import User from '../models/User.model'
-import Favorite from '../models/Favorite.model'*/
+import Asignatura from '../models/asignatura'
+import Grupo from '../models/grupo'
+import Nota from '../models/nota'
+import Usuario from '../models/usuario'
+import UsuarioAsignatura from '../models/usuarioasignatura'
+import UsuarioGrupo from '../models/usuariogrupo'
 
-let db = null
+let db: Sequelize | null = null
 
 if (!db) {
   db = new Sequelize("gestion-notas", "root", "", {
@@ -11,10 +15,14 @@ if (!db) {
     logging: console.log,
   })
 
-  /*db.addModels([
-    Favorite,
-    User,
-  ])*/
+  db.addModels([
+    Asignatura,
+    Grupo,
+    Nota,
+    Usuario,
+    UsuarioAsignatura,
+    UsuarioGrupo,
+  ])
 }
 
 export const connectDB = async () => {
@@ -44,4 +52,4 @@ export const closeDB = async () => {
   }
 }
 
-export default db
+export default db as Sequelize

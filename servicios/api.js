@@ -1,6 +1,6 @@
 class APIService {
     baseUrl = 'http://localhost:3000/api';
-  
+
     async request(url, options) {
       try {
         const method = options?.method || 'GET'
@@ -9,7 +9,7 @@ class APIService {
           'Accept': 'application/json',
           ...(options?.headers ?? {}),
         })
-  
+
         const response = await fetch(url, {
           ...options,
           method,
@@ -21,19 +21,20 @@ class APIService {
         return error
       }
     }
-  
+
     async get(route, params, options) {
       try {
-        const url = `${this.baseUrl}/${route}`
+        const paramsInline = !!params && Object.keys(params).map(key => `${key}=${params[key]}`).join('&') || '';
+        const url = `${this.baseUrl}/${route}?${paramsInline}`
         const reqOpts = { method: 'GET', ...options }
-  
+
         return await this.request(url, reqOpts)
       } catch (error) {
         console.warn('Error in APIService -> get', error)
         return error
       }
     }
-  
+
     async post(route, params, options) {
       try {
         const url = `${this.baseUrl}/${route}`
@@ -41,14 +42,14 @@ class APIService {
         if (params) {
           reqOpts.body = JSON.stringify(params)
         }
-  
+
         return await this.request(url, reqOpts)
       } catch (error) {
         console.warn('Error in APIService -> post', error)
         return error
       }
     }
-  
+
     async patch(route, params, options) {
       try {
         const url = `${this.baseUrl}/${route}`
@@ -56,19 +57,23 @@ class APIService {
         if (params) {
           reqOpts.body = JSON.stringify(params)
         }
-  
+
         return await this.request(url, reqOpts)
       } catch (error) {
         console.warn('Error in APIService -> patch', error)
         return error
       }
     }
-  
-    async delete(route, options) {
+
+    async delete(route, params, options) {
       try {
         const url = `${this.baseUrl}/${route}`
         const reqOpts = { method: 'DELETE', ...options }
-  
+
+        if (params) {
+          reqOpts.body = JSON.stringify(params)
+        }
+
         return await this.request(url, reqOpts)
       } catch (error) {
         console.warn('Error in APIService -> delete', error)
@@ -76,5 +81,5 @@ class APIService {
       }
     }
   }
-  
+
   export default APIService

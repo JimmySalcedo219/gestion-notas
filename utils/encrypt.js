@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt")
+const bcrypt =  require('bcrypt')
 
 module.exports = {
-    generateHash: (value) => {
-        return bcrypt.hashSync(value, bcrypt.genSaltSync(8))
-    },
+  generateHash: (value) => (
+    bcrypt.hashSync(value, bcrypt.genSaltSync(8))
+  ),
 }
