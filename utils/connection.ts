@@ -13,6 +13,7 @@ if (!db) {
   db = new Sequelize("gestion-notas", "root", "", {
     dialect: 'mysql',
     logging: console.log,
+    host: 'db'
   })
 
   db.addModels([
